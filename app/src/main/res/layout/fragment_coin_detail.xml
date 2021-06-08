@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="handler"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="coin"
+            type="com.example.domain.models.Coin" />
+
+        <variable
+            name="coinDetail"
+            type="com.example.domain.models.CoinDetail" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.coindetail.CoinDetailFragment">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageViewBack"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:onClick="@{handler::onClick}"
+                android:scaleType="center"
+                android:src="@drawable/ic_arrow_back_24"
+                app:tint="@color/black" />
+
+            <ImageView
+                android:id="@+id/imageViewCover"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="4dp"
+                android:layout_toStartOf="@+id/textView"
+                android:scaleType="centerCrop"
+                app:srcCompat="@color/black"
+                bind:imageUrl="@{coinDetail.imageUrl}" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@{coin.name}"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                tools:text="Bitcoin" />
+
+            <ImageView
+                android:id="@+id/imageViewAddToFavorites"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentEnd="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:onClick="@{handler::onClick}"
+                android:scaleType="center"
+                android:src="@drawable/ic_star_24" />
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@{`$` + coinDetail.currentPrice}"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:text="$45,512.12" />
+
+                <LinearLayout
+                    android:id="@+id/relativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/textViewPriceChangePercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@{coinDetail.priceChangePercentageIn24H + `%`}"
+                        tools:text="10.5%" />
+
+                    <ImageView
+                        android:id="@+id/imageViewPriceArrow"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="4dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_arrow_drop_up_24" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="8dp"
+                        android:layout_marginStart="16dp"
+                        android:background="@color/dividerColor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Last 24H " />
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/dividerColor" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Hashing Algorithm"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewCover"
+                    bind:isVisible="@{!coinDetail.hashingAlgorithm.empty}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@{coinDetail.hashingAlgorithm}"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewCover"
+                    bind:isVisible="@{!coinDetail.hashingAlgorithm.empty}"
+                    tools:text="NeoScrypt" />
+
+
+                <TextView
+                    android:id="@+id/textViewDescriptionLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewCover"
+                    bind:isVisible="@{!coinDetail.description.empty}" />
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{coinDetail.description}"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewCover"
+                    bind:isVisible="@{!coinDetail.description.empty}"
+                    tools:text="With England in another national lockdown, we asked BBC Sport readers to tell us about the last football match they attended." />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
